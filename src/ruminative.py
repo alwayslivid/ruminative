@@ -4,7 +4,7 @@
 
 '''
 @author: AlwaysLivid
-@version: 0.35
+@version: 0.36
 @description: A simple reconnaissance tool utilizing Shodan.
 '''
 
@@ -20,7 +20,7 @@ ___  __ \____  _________ ___ ___(_)_______ ______ ___  /____(_)___   _______
 __  /_/ /_  / / /__  __ `__ \__  / __  __ \_  __ `/_  __/__  / __ | / /_  _ \ 
 _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
 /_/ |_|  \__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \__,_/  \__/  /_/   _____/  \___/  
-... v0.35 - written with love by AlwaysLivid. <3
+... v0.36 - written with love by AlwaysLivid. <3
 '''
 
 def intro():
@@ -73,7 +73,7 @@ def main():
 if __name__ == "__main__":
     intro()
     if len(sys.argv) != 2 and len(secret.token) == 0:
-        print("[*] It looks like you haven't entered a token in the token.py file!")
+        print("[*] It looks like you haven't entered a token in the secret.py file!")
         print("[*] Would you like to enter one now? (Y/N)")
         answer = input().lower()
     if answer == "y":
