@@ -2,6 +2,12 @@
 
 A simple reconnaissance tool utilizing Shodan.
 
+# Usage
+
+* Add your Shodan token in the `secret.py` file.
+* Alternatively, enter your Shodan token in the terminal as an argument. Or, just don't do anything and the script is going to ask you whether you want to add a token.
+* Shodan will return results matching your public IP address. 
+
 # Requirements
 
 * Python 3
