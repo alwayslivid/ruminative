@@ -4,7 +4,7 @@
 
 '''
 @author: AlwaysLivid
-@version: 0.1
+@version: 0.35
 @description: A simple reconnaissance tool utilizing Shodan.
 '''
 
@@ -20,7 +20,7 @@ ___  __ \____  _________ ___ ___(_)_______ ______ ___  /____(_)___   _______
 __  /_/ /_  / / /__  __ `__ \__  / __  __ \_  __ `/_  __/__  / __ | / /_  _ \ 
 _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
 /_/ |_|  \__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \__,_/  \__/  /_/   _____/  \___/  
-... v0.3 - written with love by AlwaysLivid. <3
+... v0.35 - written with love by AlwaysLivid. <3
 '''
 
 def intro():
@@ -49,7 +49,7 @@ def create_shodan_obj():
 
 def shodan_search(shodan_obj, ip):
     try:
-        print("[*] Basic Information")
+        print("\n[*] Basic Information")
         result = shodan_obj.host(ip)
         hostname = "N/A"
         if len(result['hostnames']) > 0: # Borrowed from PaulSec.
@@ -64,7 +64,7 @@ def shodan_search(shodan_obj, ip):
             print("[*] Last Update: {}".format(result.get('last_update', 'N/A')))
         exit(0)
     except Exception as e:
-        print("[!] An error occured while printing the results!")
+        print("[!] An error occured while gathering the results!")
         print("[!] Exception: {}".format(e))
 
 def main():
