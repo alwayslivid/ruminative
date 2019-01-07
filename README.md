@@ -18,4 +18,3 @@ A simple reconnaissance tool utilizing Shodan.
 **Disclaimer**
 
 This tool was designed for personal use, for my own personal purposes.
-Under no circumstances 
