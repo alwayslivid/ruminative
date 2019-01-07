@@ -20,12 +20,13 @@ ___  __ \____  _________ ___ ___(_)_______ ______ ___  /____(_)___   _______
 __  /_/ /_  / / /__  __ `__ \__  / __  __ \_  __ `/_  __/__  / __ | / /_  _ \ 
 _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
 /_/ |_|  \__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \__,_/  \__/  /_/   _____/  \___/  
-... v0.36 - written with love by AlwaysLivid. <3
-'''
+     
+                This program comes with ABSOLUTELY NO WARRANTY.
+         This is free software, and you are welcome to redistribute it
+          under certain conditions; read the README file for details.
 
-def intro():
-    os.system('clear')
-    print(logo)
+v0.4 - Copyright (C) 2019 AlwaysLivid
+'''
 
 def fetch_public_ip():
     try:
@@ -52,7 +53,7 @@ def shodan_search(shodan_obj, ip):
         print("\n[*] Basic Information")
         result = shodan_obj.host(ip)
         hostname = "N/A"
-        if len(result['hostnames']) > 0: # Borrowed from PaulSec.
+        if len(result['hostnames']) > 0:
             hostname = result['hostnames'][0]
             print("[*] IP Address: {} ({})".format(result['ip_str'], hostname))
             print("[*] Country: {}".format(result.get('country_name', 'N/A')))
@@ -67,17 +68,20 @@ def shodan_search(shodan_obj, ip):
         print("[!] An error occured while gathering the results!")
         print("[!] Exception: {}".format(e))
 
-def main():
-    shodan_search(create_shodan_obj(), fetch_public_ip())
-
 if __name__ == "__main__":
-    intro()
+    os.system('clear')
+    print(logo)
+    if len(sys.argv) == 2:
+        sys.argv[1] = secret.token
     if len(sys.argv) != 2 and len(secret.token) == 0:
         print("[*] It looks like you haven't entered a token in the secret.py file!")
-        print("[*] Would you like to enter one now? (Y/N)")
+        print("[*] Would you like to enter one now?")
         answer = input().lower()
-    if answer == "y":
-        secret.token = input("[!] Enter your token: ")
-    else:
-        sys.exit(1)
-    main()
+        if answer.startswith('y') == True:
+            secret.token = input("[!] Enter your token: ")
+        elif answer.startswith('n') == True:
+            print("[!] Sorry! This script cannot be used without a Shodan API token.")
+            exit()
+        else:
+            sys.exit(1)
+    shodan_search(create_shodan_obj(), fetch_public_ip())
