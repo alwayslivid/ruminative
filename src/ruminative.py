@@ -4,7 +4,7 @@
 
 '''
 @author: AlwaysLivid
-@version: 0.41
+@version: 0.6
 @description: A simple reconnaissance tool utilizing Shodan.
 '''
 
@@ -15,17 +15,17 @@ import secret
 # https://github.com/PaulSec/Shodan-mattermost
 
 logo = '''
-________                     _____                 _____ _____                
-___  __ \____  _________ ___ ___(_)_______ ______ ___  /____(_)___   _______  
-__  /_/ /_  / / /__  __ `__ \__  / __  __ \_  __ `/_  __/__  / __ | / /_  _ \ 
-_  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
-/_/ |_|  \__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \__,_/  \__/  /_/   _____/  \___/  
+  ________                     _____                 _____ _____                
+  ___  __ \\____  _________ ___ ___(_)_______ ______ ___  /____(_)___   _______  
+  __  /_/ /_  / / /__  __ `__ \\__  / __  __ \\_  __ `/_  __/__  / __ | / /_  _ \\ 
+  _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
+  /_/ |_|  \\__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \\__,_/  \\__/  /_/   _____/  \\___/  
      
                 This program comes with ABSOLUTELY NO WARRANTY.
          This is free software, and you are welcome to redistribute it
           under certain conditions; read the README file for details.
 
-v0.41 - Copyright (C) 2019 AlwaysLivid
+                    v0.6 - Copyright (C) 2019 AlwaysLivid
 '''
 
 def fetch_public_ip():
@@ -71,11 +71,9 @@ def shodan_search(shodan_obj, ip):
 if __name__ == "__main__":
     os.system('clear')
     print(logo)
-    if len(sys.argv) == 2:
-        sys.argv[1] = secret.token
-    if len(sys.argv) != 2 and len(secret.token) == 0:
+    if len(sys.argv) <= 2 or len(secret.token) == 0:
         print("[*] It looks like you haven't entered a token in the secret.py file!")
-        print("[*] Would you like to enter one now?")
+        print("[*] Would you like to enter one now? (Y/N)")
         answer = input().lower()
         if answer.startswith('y') == True:
             secret.token = input("[!] Enter your token: ")
