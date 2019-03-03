@@ -71,15 +71,18 @@ def shodan_search(shodan_obj, ip):
 if __name__ == "__main__":
     os.system('clear')
     print(logo)
-    if len(sys.argv) <= 2 or len(secret.token) == 0:
-        print("[*] It looks like you haven't entered a token in the secret.py file!")
-        print("[*] Would you like to enter one now? (Y/N)")
-        answer = input().lower()
-        if answer.startswith('y') == True:
-            secret.token = input("[!] Enter your token: ")
-        elif answer.startswith('n') == True:
-            print("[!] Sorry! This script cannot be used without a Shodan API token.")
-            exit()
-        else:
-            sys.exit(1)
+    if "SHODAN_KEY" in os.environ:
+        secret.token = os.environ["SHODAN_KEY"]
+    else:
+        if len(secret.token) == 0:
+            print("[*] It looks like you haven't entered a token in the secret.py file!")
+            print("[*] Would you like to enter one now? (Y/N)")
+            answer = input().lower()
+            if answer.startswith('y') == True:
+                secret.token = input("[!] Enter your token: ")
+            elif answer.startswith('n') == True:
+                print("[!] Sorry! This script cannot be used without a Shodan API token.")
+                exit()
+            else:
+                sys.exit(1)
     shodan_search(create_shodan_obj(), fetch_public_ip())
