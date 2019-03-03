@@ -71,9 +71,12 @@ def shodan_search(shodan_obj, ip):
 if __name__ == "__main__":
     os.system('clear')
     print(logo)
+    print("[*] Checking for environment variable...")
     if "SHODAN_KEY" in os.environ:
+        print("[*] Found environment variable.")
         secret.token = os.environ["SHODAN_KEY"]
     else:
+        print("[*] Environment variable not found.")
         if len(secret.token) == 0:
             print("[*] It looks like you haven't entered a token in the secret.py file!")
             print("[*] Would you like to enter one now? (Y/N)")
