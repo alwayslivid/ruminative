@@ -4,14 +4,14 @@
 
 '''
 @author: AlwaysLivid
-@version: 0.36
+@version: 0.41
 @description: A simple reconnaissance tool utilizing Shodan.
 '''
 
 import sys, urllib, os, shodan
 import secret
 
-# Parts of this code were inspired by the following repositories:
+# Parts of this script were inspired by the following repositories:
 # https://github.com/PaulSec/Shodan-mattermost
 
 logo = '''
@@ -25,7 +25,7 @@ _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/
          This is free software, and you are welcome to redistribute it
           under certain conditions; read the README file for details.
 
-v0.4 - Copyright (C) 2019 AlwaysLivid
+v0.41 - Copyright (C) 2019 AlwaysLivid
 '''
 
 def fetch_public_ip():
