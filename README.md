@@ -1,6 +1,6 @@
 # RUMINATIVE
 
-A simple reconnaissance tool utilizing Shodan.
+A simple reconnaissance tool utilizing Shodan. [![Build Status](https://travis-ci.org/alwayslivid/ruminative.svg?branch=master)](https://travis-ci.org/alwayslivid/ruminative)
 
 **Usage**
 
