@@ -1,17 +1,18 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.5-dev"  # 3.5 development branch
-  - "3.6"
-  - "3.6-dev"  # 3.6 development branch
-  - "3.7-dev"  # 3.7 development branch
-# command to install dependencies
+- '2.6'
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
+- 3.5-dev
+- '3.6'
+- 3.6-dev
+- 3.7-dev
 install:
-  - pip install -r requirements.txt
-# command to run tests
+- pip install -r requirements.txt
 script:
-  - python src/ruminative.py
+- python src/ruminative.py
+env:
+  global:
+    secure: gSTkTrd/4oN4xMNX97ZS/TwrOuJbSjy53ZSDitY3j0C+lK067HLrxFU+IoRQ2ifBNhh4KmUv/h/btaMa2VQDYqeyJ3uPtgQ/q8W3puWSdP4ZH2dq2XA3cSHr4p1rovNcg4nSkkNAAsD9xYWGHS8qbEhDJ9ThbILtYmdqusnQkVzEI5qgY46tFfUkwaVhi5vGIfLauWBKjO6YYdTAIHvaeiixlT51/+LwWpKAaHpzZQqUjmjpmECInv4shwk0ZjRR552GDwu8B/S7Vcia5NSumF7sYwtIvAgW2BL505DaCdLV9wo8bcnNBeYiGtARb6Iq8n6u/fqvdBp56wPkot5sF8/RPIp2aCGOXWuUcCBVICxx86Hu/RFDz9smELF9GzPoKLcjUx6GZOsSvOBD8B/p3PBSD2Pfs+1aNZAB8szu+06NSkxpaypbVhO8WSbkVTaOTZIm0KhBy3CtGkyHhJ9/yabzbtIEk0NTRLATSDpgkS0otgw5A0prC1b5weNjN4sMXquE2hgc9KyYPHn8aYKZDLbPjcJ0euDnf/LWyrJGdajP52Zx0NhcpFwXhmtT53Kmo5xOaNH+2OAy/G6bvEjcO9H+mxJOZborhl92pIyLJBMcUZEmdLPZsjGPqXCZGZXbgQlPysKRRpYym5V8xQqMk4knOgaShR6V7OGGPVo4dmk=
