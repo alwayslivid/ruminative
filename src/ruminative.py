@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 '''
 @author: AlwaysLivid
-@version: 0.6
 @description: A simple reconnaissance tool utilizing Shodan.
 '''
 
 import sys, urllib, os, shodan
 import secret
-
-# Parts of this script were inspired by the following repositories:
-# https://github.com/PaulSec/Shodan-mattermost
 
 logo = '''
   ________                     _____                 _____ _____                
@@ -20,12 +15,15 @@ logo = '''
   __  /_/ /_  / / /__  __ `__ \\__  / __  __ \\_  __ `/_  __/__  / __ | / /_  _ \\ 
   _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
   /_/ |_|  \\__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \\__,_/  \\__/  /_/   _____/  \\___/  
-     
-                This program comes with ABSOLUTELY NO WARRANTY.
-         This is free software, and you are welcome to redistribute it
-          under certain conditions; read the README file for details.
+                           Copyright (C) 2019 AlwaysLivid
 
-                    v0.6 - Copyright (C) 2019 AlwaysLivid
+===============================================================
+======================= DISCLAIMER ============================
+===============================================================
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions; read the LICENSE.md file for details.
+===============================================================
 '''
 
 def fetch_public_ip():
@@ -47,10 +45,14 @@ def create_shodan_obj():
     except Exception as e:
         print("[!] An error occured while creating a Shodan object!")
         print("[!] Exception: {}".format(e))
+        if e == "No information available for that IP.":
+            print("[*] This tool only works with networks that have been mapped out by Shodan.")
+        exit()
 
 def shodan_search(shodan_obj, ip):
     try:
         print("\n[*] Basic Information")
+        print("IP Address: {}".format(ip))
         result = shodan_obj.host(ip)
         hostname = "N/A"
         if len(result['hostnames']) > 0:
@@ -71,20 +73,20 @@ def shodan_search(shodan_obj, ip):
 if __name__ == "__main__":
     os.system('clear')
     print(logo)
-    print("[*] Checking for environment variable...")
+    print("[!] Checking for environment variable...")
     if "SHODAN_KEY" in os.environ:
         print("[*] Found environment variable.")
         secret.token = os.environ["SHODAN_KEY"]
     else:
-        print("[*] Environment variable not found.")
+        print("[!] Environment variable not found.")
         if len(secret.token) == 0:
             print("[*] It looks like you haven't entered a token in the secret.py file!")
-            print("[*] Would you like to enter one now? (Y/N)")
+            print("[?] Would you like to enter one now? (Y/N)")
             answer = input().lower()
             if answer.startswith('y') == True:
                 secret.token = input("[!] Enter your token: ")
             elif answer.startswith('n') == True:
-                print("[!] Sorry! This script cannot be used without a Shodan API token.")
+                print("[!] Sorry! This tool cannot be used without a Shodan API token.")
                 exit()
             else:
                 sys.exit(1)
