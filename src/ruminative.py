@@ -34,7 +34,7 @@ def fetch_public_ip():
             ip = ip.read().decode('utf-8')
         return ip
     except Exception as e:
-        print("[!] An error occured while fetching the public IP address!")
+        print("[!] An error occurred while fetching the public IP address!")
         print("[!] Exception: {}".format(e))
 
 def create_shodan_obj():
@@ -43,11 +43,14 @@ def create_shodan_obj():
         token = secret.token
         return shodan.Shodan(token)
     except Exception as e:
-        print("[!] An error occured while creating a Shodan object!")
+        print("[!] An error occurred while creating a Shodan object!")
         print("[!] Exception: {}".format(e))
         if e == "No information available for that IP.":
             print("[*] This tool only works with networks that have been mapped out by Shodan.")
-        exit()
+        return 1
+
+def scan_ip(shodan_obj, ip):
+    pass # WIP.
 
 def shodan_search(shodan_obj, ip):
     try:
