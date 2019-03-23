@@ -71,7 +71,7 @@ def shodan_search(shodan_object):
     except Exception as e:
         print("[!] An error occurred while gathering the results!")
         print("[!] Exception: {}".format(e))
-        if str(e) == "No information available for that IP." and os.environ["SHODAN_KEY"] is not None:
+        if (str(e) == "No information available for that IP.") and not (os.environ["SHODAN_KEY"] is not None):
             print("[?] Would you like to scan this IP address? (y/N)")
             answer = input().lower().strip('\n')
             if answer == "y":
