@@ -1,7 +1,8 @@
 # RUMINATIVE
+
 [![Build Status](https://travis-ci.org/alwayslivid/ruminative.svg?branch=master)](https://travis-ci.org/alwayslivid/ruminative)
 
-A simple reconnaissance tool utilizing Shodan. 
+A simple reconnaissance tool utilizing Shodan.
 
 ## Getting started
 

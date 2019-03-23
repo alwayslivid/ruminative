@@ -15,7 +15,7 @@ logo = '''
   __  /_/ /_  / / /__  __ `__ \\__  / __  __ \\_  __ `/_  __/__  / __ | / /_  _ \\ 
   _  _, _/ / /_/ / _  / / / / /_  /  _  / / // /_/ / / /_  _  /  __ |/ / /  __/ 
   /_/ |_|  \\__,_/  /_/ /_/ /_/ /_/   /_/ /_/ \\__,_/  \\__/  /_/   _____/  \\___/  
-                           Copyright (C) 2019 AlwaysLivid
+                         Copyright (C) 2019 AlwaysLivid
 
 ===============================================================
 ======================= DISCLAIMER ============================
@@ -26,52 +26,58 @@ under certain conditions; read the LICENSE.md file for details.
 ===============================================================
 '''
 
-def fetch_public_ip():
+provider = "http://ip.42.pl/raw"
+with urllib.request.urlopen(provider) as ip:
     try:
-        ip = ""
-        provider = "http://ip.42.pl/raw"
-        with urllib.request.urlopen(provider) as ip: 
-            ip = ip.read().decode('utf-8')
-        return ip
+        ip = ip.read().decode('utf-8')
     except Exception as e:
-        print("[!] An error occurred while fetching the public IP address!")
+        print("\n[!] An error occurred while fetching the public IP address!")
         print("[!] Exception: {}".format(e))
 
 def create_shodan_obj():
     try:
-        token = ""
-        token = secret.token
-        return shodan.Shodan(token)
+        return shodan.Shodan(secret.token)
     except Exception as e:
         print("[!] An error occurred while creating a Shodan object!")
         print("[!] Exception: {}".format(e))
-        if e == "No information available for that IP.":
-            print("[*] This tool only works with networks that have been mapped out by Shodan.")
-        return 1
 
-def scan_ip(shodan_obj, ip):
-    pass # WIP.
+def shodan_scan(shodan_object): # WIP
+    scan = shodan_object.scan([ip])
+    print("[!] Scan complete! (ID: {})".format(scan["id"]))
 
-def shodan_search(shodan_obj, ip):
+def print_results(result, hostname):
+    print("\n[*] Basic Information")
     try:
-        print("\n[*] Basic Information")
-        print("IP Address: {}".format(ip))
-        result = shodan_obj.host(ip)
-        hostname = "N/A"
         if len(result['hostnames']) > 0:
             hostname = result['hostnames'][0]
-            print("[*] IP Address: {} ({})".format(result['ip_str'], hostname))
-            print("[*] Country: {}".format(result.get('country_name', 'N/A')))
-            print("[*] City: {}".format(result.get('city', 'N/A')))
-            print("[*] Organization: {}".format(result.get('org.get', 'N/A')))
-            print("[*] ISP: {}".format(result.get('isp', 'N/A')))
-            print("[*] ASN: {}".format(result.get('asn', 'N/A')))
-            print("[*] Operating System: {}".format(result.get('os', 'N/A')))
-            print("[*] Last Update: {}".format(result.get('last_update', 'N/A')))
-        exit(0)
+            # print("[*] IP Address: {} ({})".format(result['ip_str'], hostname))
+            print("[*] Country: {}".format(result.get('country_name', hostname)))
+            print("[*] City: {}".format(result.get('city', hostname)))
+            print("[*] Organization: {}".format(result.get('org.get', hostname)))
+            print("[*] ISP: {}".format(result.get('isp', hostname)))
+            print("[*] ASN: {}".format(result.get('asn', hostname)))
+            print("[*] Operating System: {}".format(result.get('os', hostname)))
+            print("[*] Last Update: {}".format(result.get('last_update', hostname)))
     except Exception as e:
-        print("[!] An error occured while gathering the results!")
+        print("[!] An error occurred while creating a Shodan object!")
         print("[!] Exception: {}".format(e))
+
+def shodan_search(shodan_object):
+    try:
+        print("IP Address: {}".format(ip))
+        result = shodan_object.host(ip)
+        hostname = "N/A"
+        print_results(result, hostname)
+    except Exception as e:
+        print("[!] An error occurred while gathering the results!")
+        print("[!] Exception: {}".format(e))
+        if str(e) == "No information available for that IP.":
+            print("[?] Would you like to scan this IP address? (y/N)")
+            answer = input().lower().strip('\n')
+            if answer == "y":
+                shodan_scan(shodan_object)
+            else:
+                exit()
 
 if __name__ == "__main__":
     os.system('clear')
@@ -84,13 +90,12 @@ if __name__ == "__main__":
         print("[!] Environment variable not found.")
         if len(secret.token) == 0:
             print("[*] It looks like you haven't entered a token in the secret.py file!")
-            print("[?] Would you like to enter one now? (Y/N)")
-            answer = input().lower()
+            print("[?] Would you like to enter one now? (y/N)")
+            answer = input().lower().strip('\n')
             if answer.startswith('y') == True:
                 secret.token = input("[!] Enter your token: ")
-            elif answer.startswith('n') == True:
-                print("[!] Sorry! This tool cannot be used without a Shodan API token.")
-                exit()
             else:
-                sys.exit(1)
-    shodan_search(create_shodan_obj(), fetch_public_ip())
+                print("[!] Sorry! This tool cannot be used without a Shodan API token.")
+                exit(1)
+    shodan_object = create_shodan_obj()
+    shodan_search(shodan_object)
