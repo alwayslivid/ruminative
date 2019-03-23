@@ -11,7 +11,7 @@ A simple reconnaissance tool utilizing Shodan.
 * Alternatively, enter your Shodan token in the terminal as an argument. Or, just don't do anything and the script is going to ask you whether you want to add a token.
 * Shodan will return results that match your external IP address.
 
-Please note that this tool works well in places that are open to the public or .
+Adding an environment variable will skip all prompts that require user input.
 
 ## Prerequisites
 
